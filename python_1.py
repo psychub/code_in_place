@@ -1,9 +1,13 @@
 import math
 
+CONSTANT = 6.56784
+
 
 
 def main():
     print(test([1, 2, 3, 4, 5, 6]))
+    getting_name()
+
 
 
 def test(numbers):
@@ -11,7 +15,9 @@ def test(numbers):
 
 
 
-
+def getting_name():
+    username = input("please enter your name: ")
+    return [username]
 
 
 
