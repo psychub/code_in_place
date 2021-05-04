@@ -1,15 +1,18 @@
+keep_on = input("Do you want to keep playing? 'y' 'n'") == "y"
+
 
 
 def main():
-    getting_name()
-    print("Hello " + username)
+    while keep_on:
+        getting_name()
+        print("Hello " + username)
+        keep_on
+
 
 
 def getting_name():
     global username
     username = input("please enter your name ")
-
-
 
 
 
