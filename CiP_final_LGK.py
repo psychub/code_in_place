@@ -60,21 +60,30 @@ def transform_dates(data):
 # creating markups for interventions
 def adding_interventions(data_cases):
     index_matches = []
+    position = [0,0]
     with open("interventions.csv") as f:
         interventions = pd.read_csv(f)
         interventions_trans = transform_dates(interventions)
         inter_text = list(interventions_trans["interventions"])
-        threshold = max(data_cases["cases"]) / 3
+        threshold = int(max(data_cases["cases"])) // 3
         for i in range(len(interventions["date"])):
             date = interventions_trans["date"].iloc[i]
             ind = data_cases.index[data_cases['new_date'] == date].to_list()
             index_matches.append(ind[0])
         for i in range(len(index_matches)):
             inter_pos = data_cases["cases"].loc[index_matches[i]]
-            if inter_pos >= threshold:
-                plt.annotate(inter_text[i], xy=(index_matches[i]-10,inter_pos), xytext=(index_matches[i]/2,inter_pos), arrowprops=dict(facecolor="black"))
+            if index_matches in range((position[0]),(position[0]+40)):
+                x = index_matches[i] + 80
             else:
-                plt.annotate(inter_text[i], xy=(index_matches[i]-10,inter_pos), xytext=(index_matches[i]/2,inter_pos+1), arrowprops=dict(facecolor="black"))
+                x = index_matches[i]
+            if inter_pos in range(position[1], position[1]+(threshold//2)):
+                y = inter_pos + (threshold//2)
+            else:
+                y = inter_pos
+
+            plt.annotate(inter_text[i], xy=(index_matches[i],y), xytext=(x//2,y+threshold), arrowprops=dict(facecolor="black"))
+
+        position = [x, y]
 
 
 # plots the different Provinces if there are more than one
